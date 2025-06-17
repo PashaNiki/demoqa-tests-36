@@ -3,8 +3,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 
-import static com.codeborne.selenide.Condition.selected;
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -15,13 +14,12 @@ public class SimpleJUnitTest {
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.timeout = 90000;
     }
 
     @Test
-    public void PracticeFormTest() {
+    public void practiceFormTest() {
 
-        open("https://demoqa.com/automation-practice-form");
+        open("/automation-practice-form");
         // First/Last name
         $("#firstName").setValue("Oleg");
         $("#lastName").setValue("Shirobokov");
@@ -30,7 +28,7 @@ public class SimpleJUnitTest {
         $("#userEmail").setValue("shirobokov@mail.ru");
 
         // Gender
-        $(byText("Male")).click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#gender-radio-1").shouldBe(selected);
 
         // PhoneNumber
@@ -49,22 +47,39 @@ public class SimpleJUnitTest {
         $("#subjectsInput").setValue("Social Studies").pressEnter();
 
         // Hobbies
-        $(byText("Sports")).click();
+        $("#hobbiesWrapper").$(byText("Sports")).click();
         $("#hobbies-checkbox-1").shouldBe(selected);
 
         // Pictures
-        File file = new File("src/test/resources/labubu-B-1.jpg");
-        $("#uploadPicture").uploadFile(file);
+        $("#uploadPicture").uploadFromClasspath("labubu-B-1.jpg");
 
         // CurrentAddress
         $("#currentAddress").setValue("KMarks.Street");
 
         // State And City
-        $("#state").click();
+        $("#state").scrollIntoView(true).click();
         $(byText("NCR")).click();
         $("#city").click();
         $(byText("Delhi")).click();
 
         $("#submit").pressEnter();
+
+        $(".modal-content").shouldBe(visible);
+        $(".table-responsive").shouldHave(
+                text("Oleg"),
+                text("Shirobokov"),
+                text("shirobokov@mail.ru"),
+                text("Male"),
+                text("89635411862"),
+                text("15 July,2000"),
+                text("Computer Science"),
+                text("Arts"),
+                text("Chemistry"),
+                text("Social Studies"),
+                text("Sports"),
+                text("labubu-B-1.jpg"),
+                text("KMarks.Street"),
+                text("NCR Delhi")
+        );
     }
 }
