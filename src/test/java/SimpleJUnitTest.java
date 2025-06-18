@@ -58,28 +58,26 @@ public class SimpleJUnitTest {
 
         // State And City
         $("#state").scrollIntoView(true).click();
-        $(byText("NCR")).click();
+        $("#stateCity-wrapper").$(byText("NCR")).click();;
         $("#city").click();
-        $(byText("Delhi")).click();
+        $("#stateCity-wrapper").$(byText("Delhi")).click();
 
         $("#submit").pressEnter();
 
         $(".modal-content").shouldBe(visible);
-        $(".table-responsive").shouldHave(
-                text("Oleg"),
-                text("Shirobokov"),
-                text("shirobokov@mail.ru"),
-                text("Male"),
-                text("89635411862"),
-                text("15 July,2000"),
-                text("Computer Science"),
-                text("Arts"),
-                text("Chemistry"),
-                text("Social Studies"),
-                text("Sports"),
-                text("labubu-B-1.jpg"),
-                text("KMarks.Street"),
-                text("NCR Delhi")
-        );
+        $(".modal-body").shouldHave(text("Oleg"));
+        $(".modal-body").shouldHave(text("Shirobokov"));
+        $(".modal-body").shouldHave(text("shirobokov@mail.ru"));
+        $(".modal-body").shouldHave(text("Male"));
+        $(".modal-body").shouldHave(text("89635411862"));
+        $(".modal-body").shouldHave(text("15 July,2000"));
+        $(".modal-body").shouldHave(text("Computer Science"));
+        $(".modal-body").shouldHave(text("Arts"));
+        $(".modal-body").shouldHave(text("Chemistry"));
+        $(".modal-body").shouldHave(text("Social Studies"));
+        $(".modal-body").shouldHave(text("Sports"));
+        $(".modal-body").shouldHave(text("labubu-B-1.jpg"));
+        $(".modal-body").shouldHave(text("KMarks.Street"));
+        $(".modal-body").shouldHave(text("NCR Delhi"));
     }
 }
